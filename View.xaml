@@ -1,0 +1,296 @@
+<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:theme="clr-namespace:Xceed.Wpf.Toolkit.Themes;assembly=Xceed.Wpf.Toolkit"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    
+ <UserControl.Resources>
+ 	<ResourceDictionary>
+ 	
+		<DataTemplate x:Key="ToggleButtonGreenBackground">
+	        <Grid Background="#3d511c">
+	            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding}"/>
+	        </Grid>
+	    </DataTemplate>
+	    
+            <Style TargetType="ToggleButton" x:Key="newToggleButton">
+                <Setter Property="BorderThickness" Value="0.2" />
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+
+				<Style.Triggers>
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="IsChecked" Value="True" />
+                            <Condition Property="IsMouseOver" Value="False" />
+                        </MultiTrigger.Conditions>
+                        <MultiTrigger.Setters>
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                            <Setter Property="ContentTemplate" Value="{StaticResource ToggleButtonGreenBackground}"/>
+                        </MultiTrigger.Setters>
+                    </MultiTrigger>
+				</Style.Triggers>
+            </Style>
+	 
+	     <Style x:Key="newButton" TargetType="{x:Type Button}">
+	        <Setter Property="BorderThickness" Value="0.2"/> 
+	        <Setter Property="Background" Value="#1a1a1a" />
+	    </Style> 
+	     <Style x:Key="clearButton" TargetType="{x:Type Button}">
+	        <Setter Property="BorderThickness" Value="0.2"/> 
+	        <Setter Property="Background" Value="#3d511c" />
+	    </Style> 	    
+ 	</ResourceDictionary>
+</UserControl.Resources>   
+ 	 
+	
+    <Grid HorizontalAlignment="Center">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="520"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+
+
+                    <Grid Grid.ColumnSpan="2" Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            
+                            <ColumnDefinition Width="125"/>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="125"/>
+                            <ColumnDefinition Width="50"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25"/>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="18"/>
+
+                        </Grid.RowDefinitions>
+
+                        <Label Content="Selected Player Stats" HorizontalContentAlignment="Center" Grid.Column="0" Grid.ColumnSpan="2"/>
+                        <Label Content="Team Stats" HorizontalContentAlignment="Center" Grid.Column="3" Grid.ColumnSpan="3"/>
+
+                        <!-->PLAYER STATS<-->
+                        <!--Button Grid.Row="1" Grid.Column="0"/-->
+                        <ToggleButton Grid.Row="1" Grid.Column="0" Background="#2a2a2a" Content="Atajadas" Name="Saves" Click="btnPlayerStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="1" Grid.Column="1" Content="{Binding Saves}" Style="{StaticResource newButton}"/>
+
+                        <!--Button Grid.Row="2" Grid.Column="0"/-->
+                        <ToggleButton Grid.Row="2" Grid.Column="0" Background="#2a2a2a" Content="Goles Recibidos" Name="GoalsConceded" Click="btnPlayerStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="2" Grid.Column="1" Content="{Binding Goalsconceded}" Style="{StaticResource newButton}"/>
+
+                        <!--Button Grid.Row="2" Grid.Column="0"/-->
+                        <ToggleButton Grid.Row="3" Grid.Column="0" Background="#2a2a2a" Content="Despejes de Puño" Name="Punches" Click="btnPlayerStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="3" Grid.Column="1" Content="{Binding Punches}" Style="{StaticResource newButton}"/>
+
+                        <!--Button Grid.Row="2" Grid.Column="0"/-->
+                        <ToggleButton Grid.Row="4" Grid.Column="0" Background="#2a2a2a" Content="Faltas Recibidas" Name="FoulsSuffered" Click="btnPlayerStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="4" Grid.Column="1" Content="{Binding WasFouled}" Style="{StaticResource newButton}"/>
+
+                        <!--Button Grid.Row="2" Grid.Column="0"/-->
+                        <ToggleButton Grid.Row="5" Grid.Column="0" Background="#2a2a2a" Content="Faltas Cometidas" Name="FoulsCommitted" Click="btnPlayerStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="5" Grid.Column="1" Content="{Binding Fouls}" Style="{StaticResource newButton}"/>
+
+                        <!--Button Grid.Row="2" Grid.Column="0"/-->
+                        <ToggleButton Grid.Row="6" Grid.Column="0" Background="#2a2a2a" Content="Pases Totales" Name="Passes" Click="btnPlayerStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="6" Grid.Column="1" Content="{Binding TotalPass}" Style="{StaticResource newButton}"/>
+
+                        <!--Button Grid.Row="2" Grid.Column="0"/-->
+                        <ToggleButton Grid.Row="7" Grid.Column="0" Background="#2a2a2a" Content="Precisión de Pases" Name="PassAccuracy" Click="btnPlayerStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="7" Grid.Column="1"  Content="{Binding PassAcc}" Style="{StaticResource newButton}"/>
+
+                        <!--Button Grid.Row="2" Grid.Column="0"/-->
+                        <ToggleButton Grid.Row="8" Grid.Column="0" Background="#2a2a2a" Content="Centros Totales" Name="Crosses" Click="btnPlayerStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="8" Grid.Column="1" Content="{Binding TotalCross}" Style="{StaticResource newButton}"/>
+
+                        <!--Button Grid.Row="2" Grid.Column="0"/-->
+                        <ToggleButton Grid.Row="9" Grid.Column="0" Background="#2a2a2a" Content="Remates Totales" Name="Shots" Click="btnPlayerStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="9" Grid.Column="1" Content="{Binding TotalScoreAtt}" Style="{StaticResource newButton}"/>
+
+                        <!--Button Grid.Row="2" Grid.Column="0"/-->
+                        <ToggleButton Grid.Row="10" Grid.Column="0" Background="#2a2a2a" Content="Remates al Arco" Name="ShotsOnTarget" Click="btnPlayerStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="10" Grid.Column="1" Content="{Binding OnTargetScoreAtt}" Style="{StaticResource newButton}"/>
+
+                        <!--Button Grid.Row="2" Grid.Column="0"/-->
+                        <ToggleButton Grid.Row="11" Grid.Column="0" Background="#2a2a2a" Content="Asistencias" Name="Assists" Click="btnPlayerStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="11" Grid.Column="1" Content="{Binding TotalAttAssist}" Style="{StaticResource newButton}"/>
+
+                        <!--Button Grid.Row="2" Grid.Column="0"/-->
+                        <ToggleButton Grid.Row="12" Grid.Column="0" Background="#2a2a2a" Content="Fuera de Juego" Name="Offsides" Click="btnPlayerStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="12" Grid.Column="1" Content="{Binding TotalOffside}" Style="{StaticResource newButton}"/>
+
+                        <!--Button Grid.Row="2" Grid.Column="0"/-->
+                        <ToggleButton Grid.Row="13" Grid.Column="0" Background="#2a2a2a" Content="Toques" Name="BallTouches" Click="btnPlayerStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="13" Grid.Column="1" Content="{Binding Touches}" Style="{StaticResource newButton}"/>
+
+                        <!--Button Grid.Row="2" Grid.Column="0"/-->
+                        <ToggleButton Grid.Row="14" Grid.Column="0" Background="#2a2a2a" Content="Duelos Ganados" Name="DuelsWon" Click="btnPlayerStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="14" Grid.Column="1" Content="{Binding DuelWon}" Style="{StaticResource newButton}"/>
+
+                        <!--Button Grid.Row="2" Grid.Column="0"/-->
+                        <ToggleButton Grid.Row="15" Grid.Column="0" Background="#2a2a2a" Content="Duelos Perdidos" Name="DuelsLost" Click="btnPlayerStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="15" Grid.Column="1" Content="{Binding DuelLost}" Style="{StaticResource newButton}"/>
+
+                        <!--Button Grid.Row="2" Grid.Column="0"/-->
+                        <ToggleButton Grid.Row="16" Grid.Column="0" Background="#2a2a2a" Content="Quites" Name="Tackles" Click="btnPlayerStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="16" Grid.Column="1" Content="{Binding TotalTackle}" Style="{StaticResource newButton}"/>
+
+                        <!--Button Grid.Row="2" Grid.Column="0"/-->
+                        <ToggleButton Grid.Row="17" Grid.Column="0" Background="#2a2a2a" Content="Despejes" Name="Clearances" Click="btnPlayerStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="17" Grid.Column="1" Content="{Binding TotalClearance}" Style="{StaticResource newButton}"/>
+
+                        <!--Button Grid.Row="2" Grid.Column="0"/-->
+                        <ToggleButton Grid.Row="18" Grid.Column="0" Background="#2a2a2a" Content="Recuperaciones"  Name="Retrievals" Click="btnPlayerStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="18" Grid.Column="1" Content="{Binding BallRecovery}" Style="{StaticResource newButton}"/>
+
+                        <!--Button Grid.Row="2" Grid.Column="0"/-->
+                        <ToggleButton Grid.Row="19" Grid.Column="0" Background="#2a2a2a" Content="Perdidas"  Name="BallLosses" Click="btnPlayerStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="19" Grid.Column="1" Content="{Binding PossLostAll}" Style="{StaticResource newButton}"/>
+
+                        <!--Button Grid.Row="2" Grid.Column="0"/-->
+                        <ToggleButton Grid.Row="20" Grid.Column="0" Background="#2a2a2a" Content="Goles"  Name="Goals" Click="btnPlayerStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="20" Grid.Column="1" Content="{Binding Goals}" Style="{StaticResource newButton}"/>
+
+                        <!--Button Grid.Row="2" Grid.Column="0"/-->
+                        <ToggleButton Grid.Row="21" Grid.Column="0" Background="#2a2a2a" Content="Amarillas"  Name="YellowCards" Click="btnPlayerStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="21" Grid.Column="1" Content="{Binding YellowCard}" Style="{StaticResource newButton}"/>
+
+                        <!--Button Grid.Row="2" Grid.Column="0"/-->
+                        <ToggleButton Grid.Row="22" Grid.Column="0" Background="#2a2a2a" Content="Rojas"  Name="RedCards" Click="btnPlayerStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="22" Grid.Column="1" Content="{Binding RedCard}" Style="{StaticResource newButton}"/>
+
+                        <!--Button Grid.Row="2" Grid.Column="0"/-->
+                        <ToggleButton Grid.Row="23" Grid.Column="0" Background="#2a2a2a" Content="Minutos Jugados"  Name="MinsPlayed" Click="btnPlayerStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="23" Grid.Column="1" Content="{Binding MinsPlayed}" Style="{StaticResource newButton}"/>
+
+                        <!--Button Grid.Row="2" Grid.Column="0"/-->
+                        <ToggleButton Grid.Row="24" Grid.Column="0" Background="#2a2a2a" Content="Ssn Yellow Cards" Name="SsnYellow" Click="btnPlayerStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="24" Grid.Column="1" Content="{Binding SsnYellow}" Style="{StaticResource newButton}"/>
+
+
+                        <!-->TEAM STATS<-->
+                        <Button Grid.Row="1" Grid.Column="3" Content="{Binding HomePoss}" Style="{StaticResource newButton}"/>
+                        <ToggleButton Grid.Row="1" Grid.Column="4" Background="#2a2a2a" Content="Posesión de Balón" Name="xPossession" Click="btnTeamStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="1" Grid.Column="5" Content="{Binding AwayPoss}" Style="{StaticResource newButton}"/>
+                        
+                        <Button Grid.Row="2" Grid.Column="3" Content="{Binding HomeScoreAtt}" Style="{StaticResource newButton}"/>
+                        <ToggleButton Grid.Row="2" Grid.Column="4" Background="#2a2a2a" Content="Remates Totales" Name="xShots" Click="btnTeamStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="2" Grid.Column="5" Content="{Binding AwayScoreAtt}" Style="{StaticResource newButton}"/>
+                        
+                        <Button Grid.Row="3" Grid.Column="3" Content="{Binding HomeOnTargetScoringAtt}" Style="{StaticResource newButton}"/>
+                        <ToggleButton Grid.Row="3" Grid.Column="4" Background="#2a2a2a" Content="Remates al Arco" Name="xShotsOnTarget" Click="btnTeamStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="3" Grid.Column="5" Content="{Binding AwayOnTargetScoringAtt}" Style="{StaticResource newButton}"/>
+                        
+                        <Button Grid.Row="4" Grid.Column="3" Content="{Binding HomeTotalPass}" Style="{StaticResource newButton}"/>
+                        <ToggleButton Grid.Row="4" Grid.Column="4" Background="#2a2a2a" Content="Pases Totales" Name="xPasses" Click="btnTeamStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="4" Grid.Column="5" Content="{Binding AwayTotalPass}" Style="{StaticResource newButton}"/>
+
+                        <Button Grid.Row="5" Grid.Column="3" Content="{Binding HomePassAcc}" Style="{StaticResource newButton}"/>
+                        <ToggleButton Grid.Row="5" Grid.Column="4" Background="#2a2a2a" Content="Precisión de Pases" Name="xPassAccuracy" Click="btnTeamStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="5" Grid.Column="5" Content="{Binding AwayPassAcc}" Style="{StaticResource newButton}"/>
+
+                        <Button Grid.Row="6" Grid.Column="3" Content="{Binding HomeOffside}" Style="{StaticResource newButton}"/>
+                        <ToggleButton Grid.Row="6" Grid.Column="4" Background="#2a2a2a" Content="Fuera de Juego" Name="xOffsides" Click="btnTeamStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="6" Grid.Column="5" Content="{Binding AwayOffside}" Style="{StaticResource newButton}"/>
+
+                        <Button Grid.Row="7" Grid.Column="3" Content="{Binding HomeFkFoulLost}" Style="{StaticResource newButton}"/>
+                        <ToggleButton Grid.Row="7" Grid.Column="4" Background="#2a2a2a" Content="Faltas" Name="xFoulsCommitted" Click="btnTeamStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="7" Grid.Column="5" Content="{Binding AwayFkFoulLost}" Style="{StaticResource newButton}"/>
+
+                        <Button Grid.Row="8" Grid.Column="3" Content="{Binding HomeTotalYellow}" Style="{StaticResource newButton}"/>
+                        <ToggleButton Grid.Row="8" Grid.Column="4" Background="#2a2a2a" Content="Tarjetas Amarillas" Name="xYellowCards" Click="btnTeamStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="8" Grid.Column="5" Content="{Binding AwayTotalYellow}" Style="{StaticResource newButton}"/>
+
+                        <Button Grid.Row="9" Grid.Column="3" Content="{Binding HomeTotalRed}" Style="{StaticResource newButton}"/>
+                        <ToggleButton Grid.Row="9" Grid.Column="4" Background="#2a2a2a" Content="Tarjetas Rojas" Name="xRedCards" Click="btnTeamStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="9" Grid.Column="5" Content="{Binding AwayTotalRed}" Style="{StaticResource newButton}"/>
+
+                        <Button Grid.Row="10" Grid.Column="3" Content="{Binding HomeCorners}" Style="{StaticResource newButton}"/>
+                        <ToggleButton Grid.Row="10" Grid.Column="4" Background="#2a2a2a" Content="Tiro de Esquina" Name="xCornerKicks" Click="btnTeamStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="10" Grid.Column="5" Content="{Binding AwayCorners}" Style="{StaticResource newButton}"/>
+
+                        <Button Grid.Row="11" Grid.Column="3" Content="{Binding HomeGoals}" Style="{StaticResource newButton}"/>
+                        <ToggleButton Grid.Row="11" Grid.Column="4" Background="#2a2a2a" Content="Goles" Name="xGoals" Click="btnTeamStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="11" Grid.Column="5" Content="{Binding AwayGoals}" Style="{StaticResource newButton}"/>
+
+                        <Button Grid.Row="12" Grid.Column="3" Content="{Binding HomeHeader}" Style="{StaticResource newButton}"/>
+                        <ToggleButton Grid.Row="12" Grid.Column="4" Background="#2a2a2a" Content="Remates de Cabeza" Name="xHeaders" Click="btnTeamStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="12" Grid.Column="5" Content="{Binding AwayHeader}" Style="{StaticResource newButton}"/>
+
+                        <Button Grid.Row="13" Grid.Column="3" Content="{Binding HomeDuels}" Style="{StaticResource newButton}"/>
+                        <ToggleButton Grid.Row="13" Grid.Column="4" Background="#2a2a2a" Content="Duelos Ganados" Name="xDuelsWon" Click="btnTeamStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="13" Grid.Column="5" Content="{Binding AwayDuels}" Style="{StaticResource newButton}"/>
+
+                        <Button Grid.Row="14" Grid.Column="3" Content="{Binding HomeDuelsPerc}" Style="{StaticResource newButton}"/>
+                        <ToggleButton Grid.Row="14" Grid.Column="4" Background="#2a2a2a" Content="Duelos Ganados (%)" Name="xDuelWonPercentage" Click="btnTeamStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="14" Grid.Column="5" Content="{Binding AwayDuelsPerc}" Style="{StaticResource newButton}"/>
+
+                        <Button Grid.Row="15" Grid.Column="3" Content="{Binding HomeAttOBox}" Style="{StaticResource newButton}"/>
+                        <ToggleButton Grid.Row="15" Grid.Column="4" Background="#2a2a2a" Content="Remates Fuera de Area" Name="xShotsOffTarget" Click="btnTeamStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="15" Grid.Column="5" Content="{Binding AwayAttOBox}" Style="{StaticResource newButton}"/>
+
+                        <Button Grid.Row="16" Grid.Column="3" Content="{Binding HomePossLoss}" Style="{StaticResource newButton}"/>
+                        <ToggleButton Grid.Row="16" Grid.Column="4" Background="#2a2a2a" Content="Perdidas" Name="xBallLosses" Click="btnTeamStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="16" Grid.Column="5" Content="{Binding AwayPossLoss}" Style="{StaticResource newButton}"/>
+
+                        <Button Grid.Row="17" Grid.Column="3" Content="{Binding HomeSsnYellow}" Style="{StaticResource newButton}"/>
+                        <ToggleButton Grid.Row="17" Grid.Column="4"  Background="#2a2a2a" Content="Ssn Yellow Cards" Name="xSsnYellow" Click="btnTeamStatChecked" Style="{StaticResource newToggleButton}"/>
+                        <Button Grid.Row="17" Grid.Column="5" Content="{Binding AwaySsnYellow}" Style="{StaticResource newButton}"/>
+                        
+                      	
+                      	<Grid Grid.Column="3" Grid.Row="24" Grid.ColumnSpan="3">
+                      		<Grid.ColumnDefinitions>
+                      			<ColumnDefinition Width="*"/>
+                      			<ColumnDefinition Width="*"/>                      			
+                      		</Grid.ColumnDefinitions>
+	                      	<Button Grid.Column="0" Content="Refresh Stats" Margin="0,0,2.5,0" Click="btnRefreshStats" Style="{StaticResource clearButton}"/>
+	                      	<Button Grid.Column="1" Content="Clear All Selections" Margin="2.5,0,0,0" Click="btnReset" Style="{StaticResource clearButton}" />
+                      	</Grid>
+                        
+
+                    </Grid>
+                </Grid>
+            </ScrollViewer>
+
+    </Grid>
+</UserControl>
