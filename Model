@@ -1,0 +1,747 @@
+# -*- encoding: utf-8 -*-
+import clr
+clr.AddReference("System")
+import System
+from slidescgv5mvvm import *
+#from Player import *
+
+class FormViewModel(ObservableObject):
+	def __init__(self, appCore, project, script):
+		self.appCore = appCore
+		self.project = project
+		self.script = script
+		self.propExample = ""
+		
+		#self.player = Player()
+		Globals["OptaStatsForm"] = self
+		
+		#--Team Stats
+		self.homePoss = "0"
+		self.awayPoss = "0"
+		
+		self.homeScoreAtt = "0"
+		self.awayScoreAtt = "0"
+		
+		self.homeOnTargetScoringAtt = "0"
+		self.awayOnTargetScoringAtt = "0"
+		
+		self.homeTotalPass = "0"
+		self.awayTotalPass = "0"
+		
+		self.homePassAcc = "0"
+		self.awayPassAcc = "0"
+		
+		self.homeOffside = "0"
+		self.awayOffside = "0"
+		
+		self.homeFkFoulLost = "0"
+		self.awayFkFoulLost = "0"	
+
+		self.homeTotalYellow = "0"
+		self.awayTotalYellow = "0"	
+
+		self.homeTotalRed = "0"
+		self.awayTotalRed = "0"
+
+		self.homeCorners = "0"
+		self.awayCorners = "0"
+		
+		self.homeGoals = "0"
+		self.awayGoals = "0"
+		
+		self.homeHeader = "0"
+		self.awayHeader = "0"
+
+		self.homeDuels = "0"
+		self.awayDuels = "0"
+		self.homeDuelsPerc = "0"
+		self.awayDuelsPerc = "0"		
+		
+		self.homeAttOBox = "0"
+		self.awayAttOBox = "0"			
+
+		self.homePossLoss = "0"
+		self.awayPossLoss = "0"
+
+		self.homeSsnYellow = "0"
+		self.awaySsnYellow = "0"
+		
+		#--- Player Stats		
+		self.saves = "0"
+		self.goalsconceded = "0"
+		self.punches = "0"
+		self.wasFouled = "0"
+		self.fouls = "0"
+		self.totalPass = "0"
+		self.passAcc = "0"
+		self.totalCross = "0"
+		self.totalScoreAtt = "0"
+		self.onTargetScoreAtt = "0"
+		self.totalAttAssist = "0"
+		self.totalOffside = "0"
+		self.touches = "0"
+		self.duelWon = "0"
+		self.duelLost = "0"
+		self.totalTackle = "0"
+		self.totalClearance = "0"
+		self.ballRecovery = "0"
+		self.possLostAll = "0"
+		self.goals = "0"
+		self.yellowCard = "0"
+		self.redCard = "0"
+		self.minsPlayed = "0"
+		self.seasonYellow = "0"
+		
+		#self.Fill()
+		#self.FillPlayer()
+
+	
+	def GetPlayerStat(self, stat, player):
+		value = "0"
+
+		if len(stat) == 0:
+			return value
+
+		else:	
+			#print stat
+			for st in stat:
+				if st == "PassAccuracy":
+					try:
+						value = str(round((float(player.Stats.ExtraStats.accuratepass) * 100 / float(player.Stats.ExtraStats.totalpass)),1))
+					except:
+						value = ("0")
+						
+				elif st == "DuelsLost": 
+					try:
+						value = player.Stats.ExtraStats.duellost
+					except:
+						value = ("0")
+					
+				elif st == "SsnYellow": 
+					try:
+						value = player.CompetitionStats.YellowCards
+					except:
+						value = ("0")
+						
+				elif st == "Retrievals":
+					try:
+						value = player.Stats.ExtraStats.ballrecovery
+					except:
+						value = ("0")
+						
+				elif st == "MinsPlayed":
+					try:					
+						value = player.Stats.ExtraStats.minsplayed
+					except:
+						value = ("0")
+						
+				elif st == "Crosses":
+					try:
+						value = player.Stats.ExtraStats.totalcross	
+					except:
+						value= ("0")
+						
+				else:
+					try: 
+						value = (player.Stats.GetValue(st))
+					except:
+						value = ("0")
+			#print value
+			return value
+			
+			
+	def GetTeamStat(self, stat, team):
+	
+		value = "0"
+		if len(stat) == 0:
+			return value
+		else:
+			for st in stat:
+				if st == "DuelWonPercentage":
+					try:
+						value = str(round((float(team.Stats.ExtraStats.duelwon) * 100) / (float(team.Stats.ExtraStats.duelwon) + float(team.Stats.ExtraStats.duellost) ),1 ))
+				
+					except:
+						value = ("0")
+				
+				elif st == "PassAccuracy":
+					try:
+						value = str(float(round( float(team.Stats.ExtraStats.accuratepass) * 100 / float(team.Stats.ExtraStats.totalpass) , 1) ))
+				
+					except:
+						value = ("0")
+						
+					if team.IsHomeTeam:	
+						Globals["HomePassPerc"] = value
+					else:
+						Globals["AwayPassPerc"] = value
+				
+				elif st == "SsnYellow": 
+					try:
+						value = team.CompetitionStats.YellowCards
+					except:
+						value = ("0")						
+				
+				elif st == "Headers":
+					try:
+						value = team.Stats.ExtraStats.atthdtotal	
+					except:
+						value = ("0")
+				else:
+					try: 
+						value = (team.Stats.GetValue(st))
+						print value
+					except:
+						value = ("0")
+			return value			
+			
+	#@property
+	#def Player(self):
+	#	return self.player				
+	
+	@property
+	def PropExample(self):
+		return self.propExample
+	
+	@PropExample.setter
+	def PropExample(self, value):	
+		self.propExample = value
+		self.OnPropertyChanged()
+		
+	def ActionExample(self, param):
+		print self.script.Name
+#-- Total Shots , Remates al arco		
+	@property
+	def HomeScoreAtt(self):
+		return self.homeScoreAtt
+	
+	@HomeScoreAtt.setter
+	def HomeScoreAtt(self, value):	
+		self.homeScoreAtt = value
+		self.OnPropertyChanged()
+		
+	@property
+	def AwayScoreAtt(self):
+		return self.awayScoreAtt
+	
+	@AwayScoreAtt.setter
+	def AwayScoreAtt(self, value):	
+		self.awayScoreAtt = value
+		self.OnPropertyChanged()
+#----		
+	@property
+	def HomePoss(self):
+		return self.homePoss
+	
+	@HomePoss.setter
+	def HomePoss(self, value):	
+		self.homePoss = value
+		self.OnPropertyChanged()
+		
+	@property
+	def AwayPoss(self):
+		return self.awayPoss
+	
+	@AwayPoss.setter
+	def AwayPoss(self, value):	
+		self.awayPoss = value
+		self.OnPropertyChanged()	
+		
+#-- Shots on Target , Remates al Arco
+	@property
+	def HomeOnTargetScoringAtt(self):
+		return self.homeOnTargetScoringAtt
+	
+	@HomeOnTargetScoringAtt.setter
+	def HomeOnTargetScoringAtt(self, value):	
+		self.homeOnTargetScoringAtt = value
+		self.OnPropertyChanged()
+		
+	@property
+	def AwayOnTargetScoringAtt(self):
+		return self.awayOnTargetScoringAtt
+	
+	@AwayOnTargetScoringAtt.setter
+	def AwayOnTargetScoringAtt(self, value):	
+		self.awayOnTargetScoringAtt = value
+		self.OnPropertyChanged()	
+#-- Total Passes , Pases Totales		
+	@property
+	def HomeTotalPass(self):
+		return self.homeTotalPass
+	
+	@HomeTotalPass.setter
+	def HomeTotalPass(self, value):	
+		self.homeTotalPass = value
+		self.OnPropertyChanged()
+		
+	@property
+	def AwayTotalPass(self):
+		return self.awayTotalPass
+	
+	@AwayTotalPass.setter
+	def AwayTotalPass(self, value):	
+		self.awayTotalPass = value
+		self.OnPropertyChanged()	
+		
+#-- Acc Passes , Precicion Pases		
+	@property
+	def HomePassAcc(self):
+		return self.homePassAcc
+	
+	@HomePassAcc.setter
+	def HomePassAcc(self, value):	
+		self.homePassAcc = value
+		self.OnPropertyChanged()
+		
+	@property
+	def AwayPassAcc(self):
+		return self.awayPassAcc
+	
+	@AwayPassAcc.setter
+	def AwayPassAcc(self, value):	
+		self.awayPassAcc = value
+		self.OnPropertyChanged()	
+#-- Acc Passes , Precicion Pases		
+	@property
+	def HomeOffside(self):
+		return self.homeOffside
+	
+	@HomeOffside.setter
+	def HomeOffside(self, value):	
+		self.homeOffside = value
+		self.OnPropertyChanged()
+		
+	@property
+	def AwayOffside(self):
+		return self.awayOffside
+	
+	@AwayOffside.setter
+	def AwayOffside(self, value):	
+		self.awayOffside = value
+		self.OnPropertyChanged()	
+		
+#-- Acc Passes , Precicion Pases		
+	@property
+	def HomeFkFoulLost(self):
+		return self.homeFkFoulLost
+	
+	@HomeFkFoulLost.setter
+	def HomeFkFoulLost(self, value):	
+		self.homeFkFoulLost = value
+		self.OnPropertyChanged()
+		
+	@property
+	def AwayFkFoulLost(self):
+		return self.awayFkFoulLost
+	
+	@AwayFkFoulLost.setter
+	def AwayFkFoulLost(self, value):	
+		self.awayFkFoulLost = value
+		self.OnPropertyChanged()
+		
+#-- Acc Passes , Precicion Pases		
+	@property
+	def HomeTotalYellow(self):
+		return self.homeTotalYellow
+	
+	@HomeTotalYellow.setter
+	def HomeTotalYellow(self, value):	
+		self.homeTotalYellow = value
+		self.OnPropertyChanged()
+		
+	@property
+	def AwayTotalYellow(self):
+		return self.awayTotalYellow
+	
+	@AwayTotalYellow.setter
+	def AwayTotalYellow(self, value):	
+		self.awayTotalYellow = value
+		self.OnPropertyChanged()	
+		
+#-- Acc Passes , Precicion Pases		
+	@property
+	def HomeTotalRed(self):
+		return self.homeTotalRed
+	
+	@HomeTotalRed.setter
+	def HomeTotalRed(self, value):	
+		self.homeTotalRed = value
+		self.OnPropertyChanged()
+		
+	@property
+	def AwayTotalRed(self):
+		return self.awayTotalRed
+	
+	@AwayTotalRed.setter
+	def AwayTotalRed(self, value):	
+		self.awayTotalRed = value
+		self.OnPropertyChanged()	
+		
+		
+#-- Corners 	
+	@property
+	def HomeCorners(self):
+		return self.homeCorners
+	
+	@HomeCorners.setter
+	def HomeCorners(self, value):	
+		self.homeCorners = value
+		self.OnPropertyChanged()
+		
+	@property
+	def AwayCorners(self):
+		return self.awayCorners
+	
+	@AwayCorners.setter
+	def AwayCorners(self, value):	
+		self.awayCorners = value
+		self.OnPropertyChanged()			
+		
+#-- Goals	
+	@property
+	def HomeGoals(self):
+		return self.homeGoals
+	
+	@HomeGoals.setter
+	def HomeGoals(self, value):	
+		self.homeGoals =value
+		self.OnPropertyChanged()
+		
+	@property
+	def AwayGoals(self):
+		return self.awayGoals
+	
+	@AwayGoals.setter
+	def AwayGoals(self, value):	
+		self.awayGoals =value
+		self.OnPropertyChanged()	
+		
+#-- Goals	
+	@property
+	def HomeHeader(self):
+		return self.homeHeader
+	
+	@HomeHeader.setter
+	def HomeHeader(self, value):	
+		self.homeHeader = value
+		self.OnPropertyChanged()
+		
+	@property
+	def AwayHeader(self):
+		return self.awayHeader
+	
+	@AwayHeader.setter
+	def AwayHeader(self, value):	
+		self.awayHeader = value
+		self.OnPropertyChanged()	
+
+#-- Goals	
+	@property
+	def HomeDuels(self):
+		return self.homeDuels
+	
+	@HomeDuels.setter
+	def HomeDuels(self, value):	
+		self.homeDuels = value
+		self.OnPropertyChanged()
+		
+	@property
+	def AwayDuels(self):
+		return self.awayDuels
+	
+	@AwayDuels.setter
+	def AwayDuels(self, value):	
+		self.awayDuels = value
+		self.OnPropertyChanged()
+		
+#-- Goals	
+	@property
+	def HomeDuelsPerc(self):
+		return self.homeDuelsPerc
+	
+	@HomeDuelsPerc.setter
+	def HomeDuelsPerc(self, value):	
+		self.homeDuelsPerc = value
+		self.OnPropertyChanged()
+		
+	@property
+	def AwayDuelsPerc(self):
+		return self.awayDuelsPerc
+	
+	@AwayDuelsPerc.setter
+	def AwayDuelsPerc(self, value):	
+		self.awayDuelsPerc = value
+		self.OnPropertyChanged()	
+
+#-- Goals	
+	@property
+	def HomeAttOBox(self):
+		return self.homeAttOBox
+	
+	@HomeAttOBox.setter
+	def HomeAttOBox(self, value):	
+		self.homeAttOBox =value
+		self.OnPropertyChanged()
+		
+	@property
+	def AwayAttOBox(self):
+		return self.awayAttOBox
+	
+	@AwayAttOBox.setter
+	def AwayAttOBox(self, value):	
+		self.awayAttOBox = value
+		self.OnPropertyChanged()
+
+#-- Possession	
+	@property
+	def HomePossLoss(self):
+		return self.homePossLoss
+	
+	@HomePossLoss.setter
+	def HomePossLoss(self, value):	
+		self.homePossLoss = value
+		self.OnPropertyChanged()
+	
+	@property
+	def AwayPossLoss(self):
+		return self.awayPossLoss
+	
+	@AwayPossLoss.setter
+	def AwayPossLoss(self, value):	
+		self.awayPossLoss = value
+		self.OnPropertyChanged()	
+
+#-- Ssn Yellow Cards	
+	@property
+	def HomeSsnYellow(self):
+		return self.homeSsnYellow
+	
+	@HomeSsnYellow.setter
+	def HomeSsnYellow(self, value):	
+		self.homeSsnYellow = value
+		self.OnPropertyChanged()
+	
+	@property
+	def AwaySsnYellow(self):
+		return self.awaySsnYellow
+	
+	@AwaySsnYellow.setter
+	def AwaySsnYellow(self, value):	
+		self.awaySsnYellow = value
+		self.OnPropertyChanged()	
+
+#==== PLAYER STATS
+
+	@property
+	def Saves(self):
+		return self.saves
+	
+	@Saves.setter
+	def Saves(self, value):	
+		self.saves = value
+		self.OnPropertyChanged()
+	@property
+	def Goalsconceded(self):
+		return self.goalsconceded
+	
+	@Goalsconceded.setter
+	def Goalsconceded(self, value):	
+		self.goalsconceded = value
+		self.OnPropertyChanged()		
+		
+	@property
+	def Punches(self):
+		return self.punches
+	
+	@Punches.setter
+	def Punches(self, value):	
+		self.punches = value
+		self.OnPropertyChanged()	
+		
+	@property
+	def WasFouled(self):
+		return self.wasFouled
+	
+	@WasFouled.setter
+	def WasFouled(self, value):	
+		self.wasFouled = value
+		self.OnPropertyChanged()
+		
+	@property
+	def Fouls(self):
+		return self.fouls
+	
+	@Fouls.setter
+	def Fouls(self, value):	
+		self.fouls = value
+		self.OnPropertyChanged()
+
+	@property
+	def TotalPass(self):
+		return self.totalPass
+	
+	@TotalPass.setter
+	def TotalPass(self, value):	
+		self.totalPass = value
+		self.OnPropertyChanged()
+
+	@property
+	def PassAcc(self):
+		return self.passAcc
+	
+	@PassAcc.setter
+	def PassAcc(self, value):	
+		self.passAcc = value
+		self.OnPropertyChanged()
+
+	@property
+	def TotalCross(self):
+		return self.totalCross
+	
+	@TotalCross.setter
+	def TotalCross(self, value):	
+		self.totalCross = value
+		self.OnPropertyChanged()
+
+	@property
+	def TotalScoreAtt(self):
+		return self.totalScoreAtt
+	
+	@TotalScoreAtt.setter
+	def TotalScoreAtt(self, value):	
+		self.totalScoreAtt = value
+		self.OnPropertyChanged()		
+
+	@property
+	def OnTargetScoreAtt(self):
+		return self.onTargetScoreAtt
+	
+	@OnTargetScoreAtt.setter
+	def OnTargetScoreAtt(self, value):	
+		self.onTargetScoreAtt = value
+		self.OnPropertyChanged()			
+	@property
+	def TotalAttAssist(self):
+		return self.totalAttAssist
+	
+	@TotalAttAssist.setter
+	def TotalAttAssist(self, value):	
+		self.totalAttAssist = value
+		self.OnPropertyChanged()
+
+	@property
+	def TotalOffside(self):
+		return self.totalOffside
+	
+	@TotalOffside.setter
+	def TotalOffside(self, value):	
+		self.totalOffside = value
+		self.OnPropertyChanged()
+
+	@property
+	def Touches(self):
+		return self.touches
+	
+	@Touches.setter
+	def Touches(self, value):	
+		self.touches = value
+		self.OnPropertyChanged()
+
+	@property
+	def DuelWon(self):
+		return self.duelWon
+	
+	@DuelWon.setter
+	def DuelWon(self, value):	
+		self.duelWon = value
+		self.OnPropertyChanged()
+
+	@property
+	def DuelLost(self):
+		return self.duelLost
+	
+	@DuelLost.setter
+	def DuelLost(self, value):	
+		self.duelLost = value
+		self.OnPropertyChanged()		
+
+	@property
+	def TotalTackle(self):
+		return self.totalTackle
+	
+	@TotalTackle.setter
+	def TotalTackle(self, value):	
+		self.totalTackle = value
+		self.OnPropertyChanged()	
+	@property
+	def TotalClearance(self):
+		return self.totalClearance
+	
+	@TotalClearance.setter
+	def TotalClearance(self, value):	
+		self.totalClearance = value
+		self.OnPropertyChanged()
+
+	@property
+	def BallRecovery(self):
+		return self.ballRecovery
+	
+	@BallRecovery.setter
+	def BallRecovery(self, value):	
+		self.ballRecovery = value
+		self.OnPropertyChanged()
+
+	@property
+	def PossLostAll(self):
+		return self.possLostAll
+	
+	@PossLostAll.setter
+	def PossLostAll(self, value):	
+		self.possLostAll = value
+		self.OnPropertyChanged()
+
+	@property
+	def Goals(self):
+		return self.goals
+	
+	@Goals.setter
+	def Goals(self, value):	
+		self.goals = value
+		self.OnPropertyChanged()
+
+	@property
+	def YellowCard(self):
+		return self.yellowCard
+	
+	@YellowCard.setter
+	def YellowCard(self, value):	
+		self.yellowCard = value
+		self.OnPropertyChanged()		
+
+	@property
+	def RedCard(self):
+		return self.redCard
+	
+	@RedCard.setter
+	def RedCard(self, value):	
+		self.redCard = value
+		self.OnPropertyChanged()	
+
+	@property
+	def MinsPlayed(self):
+		return self.minsPlayed
+	
+	@MinsPlayed.setter
+	def MinsPlayed(self, value):	
+		self.minsPlayed = value
+		self.OnPropertyChanged()
+		
+	@property
+	def SsnYellow(self):
+		return self.seasonYellow
+	
+	@SsnYellow.setter
+	def SsnYellow(self, value):	
+		self.seasonYellow = value
+		self.OnPropertyChanged()		
